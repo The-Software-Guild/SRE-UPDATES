@@ -16,8 +16,6 @@ Prometheus answers questions like "What percentage of HTTP requests were success
 ## Grafana
 A tool for making interactive dashboards based on data from data sources, such as Prometheus and Loki. Grafana also supports creating alerts. In this activity, Grafana is only used to execute queries, that later you will use to build dashboards and alerts.
 
-
-
 # Instructions
 Every part of our environment runs in a namespace in our Kubernetes cluster. This includes Jenkins, K8sdashboard, Grafana, Loki, Prometheus, and the app we deployed.
 
@@ -30,7 +28,7 @@ This activity will walk you through how our application is connected to our moni
 
 
 
-## Loki
+## Loki Introduction
 The K8s cluster has been configured to send any standard output and standard error to Loki. 
 1. visit https://grafana.computerlab.online/
 2. click on Explore (the compass icon on the left)
@@ -47,7 +45,7 @@ If you had any trouble with the steps, refer to the image below.
 
 Application logs may provide very detailed information about errors or warnings, such as an exception and line number. Try using the code builder to build more advanced queries before moving on.
 
-One of the most important logs you will need to use in this enviornment is the `flux kustomize controller`. This job is responsible for making your environment changes, **YAML Errors will show up in this log stream!**
+One of the most important logs you will need to use in this environment is the `flux kustomize controller`. This is our GitOPS tool, **YAML Errors will show up in this log stream!**
   ```
   {job="flux-system/kustomize-controller"} |= `<COHORT>-<TEAM>-<ENV>` 
   ```
@@ -105,23 +103,23 @@ Now that we have interacted with our monitoring systems and executed a query, le
         {
           namespace="<COHORT>-<TEAM>-<ENV>" 
           app="orderbookapi"
-        } |~ `(?i)heartbeat`[1m]
+        } |~ `(?i)heartbeat`[$__interval]
       )
       ```
 
-  7. What percentage of logs are heartbeat logs? You can use the `count_over_time` function with some simple math to answer this question.
+  7. What percentage of logs per minute are heartbeat logs? You can use the `count_over_time` or `rate` function with some simple math to answer this question.
       ```
       (
         count_over_time( # heartbeats
         {
           namespace="<COHORT>-<TEAM>-<ENV>", app="orderbookapi"
-          } |~ `(?i)heartbeat` [$__interval]
+          } |~ `(?i)heartbeat` [1m]
         )
         / # divided by
         count_over_time( # all logs
           {
             namespace="<COHORT>-<TEAM>-<ENV>", app="orderbookapi"
-            }  [$__interval]
+            }  [1m]
         )
       ) * 100 # make it a percentage
       ```
@@ -129,9 +127,9 @@ Now that we have interacted with our monitoring systems and executed a query, le
 Experiment with different aggregation functions and patterns in the log files. Explore the features of Grafana, such as query history.
 
 ## Parsing Logs
-When using line filters, you are searching if a pattern is in a log. How would you select logs with a price greater than 100? That may prove challenging unless you parse the log into key-value pairs and use the `>` operator. 
+When using line filters, you are searching if a pattern is in a log. How would you select logs with a price greater than 100? That may prove challenging unless you parse the log into key-value pairs and use the `>` operator. Line filters will perform faster than parsing so try to use line filters when possible.
 
-There is more than one way to parse log entries. You can pipe the command to `pattern` and create your key-value pairs based on patterns. More appropriate, if your logs are in JSON, you can pipe to the `json` command and use the key-value pairs in the logs.
+There is more than one way to parse log entries. You can pipe to the command `pattern` and create your key-value pairs based on patterns. More appropriate, if your logs are in JSON, you can pipe to the `json` command and use the key-value pairs in the logs.
 
 1. These are the logs that contain "side": "buy"
     ```
@@ -158,7 +156,7 @@ Our K8s cluster is configured to log every web request to an app named ingress-n
 Notice that all logs are `json`. Look at the logs, how can you search for your application logs? Hopefully, you noticed the `host` key. Use `json` to select the logs for your api.
 
 ```
-{app="ingress-nginx"} | json | host =`c500team01prod-api.computerlab.online`
+{app="ingress-nginx"} | json | host =`<COHORT><TEAM><ENV>-api.computerlab.online`
 ```
 
 You may receive parsing errors from improperly formatted json logs. Use the key `__error__` to remove those logs. Lets also remove any request for our metrics, and only retain successful (2xx) requests.
@@ -249,7 +247,7 @@ Prometheus is configured to scrape data from any service running in our cluster 
   - The metric `http_requests_total` has multiple label filters applied to select metrics for a specific 2xx GET request to '/stock_quote'. *Run the PromQL query, but be sure to update the namespace!*
 5. Use the `/metrics` endpoint and `metric browser in Grafana` to build some different PromQL Queries. below is an example of one.
 
-      Requests with status codes of 4xx are client errors (eg. 404 is file not found). Below is the percentage of client errors from all our request
+      Requests with status codes of 4xx are client errors (eg. 404 is file not found). Below is the percentage of client errors from all our requests since the launch of our app.
       ```
       sum(http_requests_total{ # number of 4xx request
         namespace="<COHORT>-<TEAM>-<ENV>", 
@@ -260,6 +258,18 @@ Prometheus is configured to scrape data from any service running in our cluster 
         namespace="<COHORT>-<TEAM>-<ENV>"
       }) * 100 
       ```
+
+6. The query above looks complete, however, `http_requests_total` is a `counter` type. Counter types always go up, so the equation above tells how many 4xx since the app has been launched. It is more useful to know how many requests per minute (or any time range) were 4xx. To achieve this, simply use `rate` or `count_over_time`. 
+```
+sum(rate(http_requests_total{ # number of 4xx request
+  namespace="<COHORT>-<TEAM>-<ENV>", 
+  status="4xx"
+}[1m])) 
+/  # divide by
+sum(rate(http_requests_total{ # total number of request
+  namespace="<COHORT>-<TEAM>-<ENV>"
+}[1m])) * 100
+```
 
 
 The capability of reading real-time metrics from applications is fundamental to reliability. Metrics allow us to easily monitor latency, peak usage, percentage of failed requests, availability of replicas, the health of services, memory usage, CPU and more. 
@@ -300,6 +310,75 @@ This code below returns a 1 if the database is up. This is a great metric to set
 mysql_up{namespace="<COHORT>-<TEAM>-<ENV>"}
 ```
 
+## Aggregations
+Grouping and aggregation are useful because they allow us to use a single graph instead of multiple graphs to display the same query for different labels.
+
+The latency example earlier uses the ingress-nginx logs to calculate the percentage of all requests faster than a threshold. What if we wanted that for every endpoint, would we have to make one for each endpoint?
+
+We can achieve this using the `sum by`, which is similar to a SQL Group By and Sum. Consider the code below. It is the rate of request with latency less than or equal to (le) 0.5 seconds. 
+
+```
+rate(
+    http_request_duration_seconds_bucket{
+      handler!~"(none|/metrics)",
+      le="0.5",
+      namespace="<COHORT>-<TEAM>-<ENV>"
+    }[1m])
+```
+
+The query above returns multiple series. We can not do math unless we use `sum` to combine the multiple series into one. Now we can divide it against itself.  
+```
+sum # Number of all request faster than 0.5 seconds
+  (rate(
+    http_request_duration_seconds_bucket{
+      handler!~"(none|/metrics)",
+      le="0.5",
+      namespace="<COHORT>-<TEAM>-<ENV>"
+    }[1m])
+  ) 
+  / # divide by
+sum # all request
+  (rate(
+    http_request_duration_seconds_bucket{
+      handler!~"(none|/metrics)",
+      le="+Inf",# infinity, or all request
+      namespace="<COHORT>-<TEAM>-<ENV>"
+    } [1m])
+  )
+```
+Now we can use `sum by` to group the data that we want to sum together. The code below will group all series with the same handler and sum those. For example, all series with the handler "stock_quote" will be separated from the handler "Trade". Now you can view and toggle the latency for all endpoints in one graph.
+
+```
+sum by (handler) 
+  (rate(
+    http_request_duration_seconds_bucket{
+      handler!~"(none|/metrics)",
+      le="0.5",
+      namespace="<COHORT>-<TEAM>-<ENV>"
+    }[$__rate_interval])
+  ) 
+  / 
+sum by (handler) 
+  (rate(
+    http_request_duration_seconds_bucket{
+      handler!~"(none|/metrics)",
+      le="+Inf",
+      namespace="<COHORT>-<TEAM>-<ENV>"
+      }[$__rate_interval])
+  )
+```
+
+Below is a LogQL example of an aggregation. It uses our namespace logs and only retains values with a matching pattern for the path. It then uses JSON so that we can use the label "path" in our aggregation. This will count the number of requests for each path (endpoint). If you are not sure about what values to sum by, simply examine the raw logs and look at what labels are detected.
+
+```
+sum(
+  count_over_time(
+    {namespace="<COHORT>-<TEAM>-<ENV>"} 
+      |~ `"path": "/(trade|holdings|all_orders|stock_quote|stocklist).*"` 
+      | json [$__interval] )) 
+by (path)
+```
+
 ## Conclusion
-Monitoring our application provides insight into how reliable the customer experience is when engaging with our sites. This lesson described how the different monitoring components are integrated into the apps we deploy. Then learned how to use the monitoring systems to query, and help us write queries. 
+Monitoring our application provides insight into how reliable the customer experience is when engaging with our sites. This lesson described how the different monitoring components are integrated into the apps we deploy. Then we learned how to use the monitoring systems to query, and help us write queries. 
 
