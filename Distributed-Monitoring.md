@@ -263,11 +263,13 @@ Prometheus is configured to scrape data from any service running in our cluster 
 ```
 sum(rate(http_requests_total{ # number of 4xx request
   namespace="<COHORT>-<TEAM>-<ENV>", 
+   handler!~"(metrics|docs)", # exclude these endpoints
   status="4xx"
 }[1m])) 
 /  # divide by
 sum(rate(http_requests_total{ # total number of request
-  namespace="<COHORT>-<TEAM>-<ENV>"
+  namespace="<COHORT>-<TEAM>-<ENV>",
+   handler!~"(metrics|docs)" # exclude these endpoints
 }[1m])) * 100
 ```
 
