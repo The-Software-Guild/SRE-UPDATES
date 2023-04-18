@@ -381,6 +381,15 @@ sum(
 by (path)
 ```
 
+Our Nginx logs may be a better source for volume than our API. However, there is no path field, and the request_uri field may differ for requests to the same endpoint. To use these logs, the code below uses a pattern extraction regex to create a field named path that we can sum by. Then, it matches the string "request_uri" and extracts the following matching characters until there is no match into a new field named path.
+
+```
+sum (count_over_time(
+  {app="ingress-nginx"} |= `<COHORT><TEAM><ENV>` != `grafana` 
+    | regexp `request_uri["\s:]+(?P<path>[\/]+[a-z_]+).*` [1m] ))
+by (path)
+```
+
 ## Conclusion
 Monitoring our application provides insight into how reliable the customer experience is when engaging with our sites. This lesson described how the different monitoring components are integrated into the apps we deploy. Then we learned how to use the monitoring systems to query, and help us write queries. 
 
