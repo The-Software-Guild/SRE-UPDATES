@@ -97,7 +97,7 @@ To add an alert follow these steps:
 7. Select your folder, and use your team name for group. 
 8. Save and exit. Then repeat if you have not done both alerts. You will notice that the panels now have a green heart in the dashboard. They will change color depending on the status of the alert. 
 
-When you have completed both alerts, test them. Spam this URI for 5 minutes to create too many 404 requests `https://c500team01prod-api.computerlab.online/nofile`, and monitor your alert in the dashboard or on the alert page in Grafana. You can try to do the same for the trade SLI by executing a lot of trades.
+When you have completed both alerts, test them. Spam this URI for 5 minutes to create too many 404 requests `https://<COHORT><TEAM><ENV>-api.computerlab.online/nofile`, and monitor your alert in the dashboard or on the alert page in Grafana. You can try to do the same for the trade SLI by executing a lot of trades.
 
 ## Bonus
 
