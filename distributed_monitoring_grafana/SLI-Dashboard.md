@@ -110,7 +110,7 @@ avg(avg_over_time({app="ingress-nginx"}
     | json
         # remove json parsing errors  
       |  __error__!=`JSONParserErr` 
-      | host =`c500team01prod-api.computerlab.online`
+      | host =`<COHORT><TEAM><ENV>-api.computerlab.online`
       # successfull request 
       | upstream_status=~"(2|3)[0-9]{2}"
       # create a field named path to group by  
