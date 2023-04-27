@@ -152,3 +152,9 @@ We will only be updating the dev environment to test our new API. This activity 
     ```
     {namespace="<COHORT>-<TEAM>-dev"} |= ``
     ```
+
+## BONUS
+
+- Add an endpoint in the existing `orderbookapi` deployment that makes a request to your service. You should be able to use the container name as the service URI since both deployments have a service in the same namespace.
+
+- Create a python error in a new endpoint for your currency api and find the logs for it. Do the same for YAML errors.
