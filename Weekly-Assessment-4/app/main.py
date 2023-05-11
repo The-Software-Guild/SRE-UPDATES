@@ -49,7 +49,7 @@ async def available_currencies(from_currency: str, to_currency: str) -> list:
     response = requests.get(f"{API_BASE_URL}{from_currency.upper()}")
     if response.status_code == 200:
         data = response.json()
-        return data["rates"].keys():
+        return data["rates"].keys()
 
 # @CODE : ADD ENDPOINT TO GET LIST OF CRYPTO CURRENCIES
 # You can use https://docs.cloud.coinbase.com/sign-in-with-coinbase/docs/api-currencies
