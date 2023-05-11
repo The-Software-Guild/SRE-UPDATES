@@ -40,8 +40,10 @@ async def convert_amount(from_currency: str, to_currency: str, amount: float) ->
     }
 
 # @CODE : ADD ENDPOINT TO LIST ALL AVAILABLE CURRENCIES
+# NOTE : FastAPI enforces that the return type of the function matches the function signature!
+#        This is a common error
 @app.get("/available_currencies")
-async def available_currencies(from_currency: str, to_currency: str) -> list:
+async def available_currencies(from_currency: str) -> dict:
     """
     Coded by: <name>
     This endpoint returns a list of available fiat currenices.
@@ -49,7 +51,10 @@ async def available_currencies(from_currency: str, to_currency: str) -> list:
     response = requests.get(f"{API_BASE_URL}{from_currency.upper()}")
     if response.status_code == 200:
         data = response.json()
-        return data["rates"].keys()
+        print(data['rates'].keys())
+        return {"currencies":list(data["rates"].keys())}
+    else:
+        raise HTTPException(status_code=400, detail="From currency not supported")
 
 # @CODE : ADD ENDPOINT TO GET LIST OF CRYPTO CURRENCIES
 # You can use https://docs.cloud.coinbase.com/sign-in-with-coinbase/docs/api-currencies
