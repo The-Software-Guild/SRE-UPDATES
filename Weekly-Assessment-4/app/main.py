@@ -92,7 +92,7 @@ async def update_orderbookdb_asset_price(symbol: str, new_price: int) -> dict:
     """
     from sqlalchemy import create_engine
     
-    engine = create_engine('postgresql://user:password@localhost/mydatabase')
+    engine = create_engine('mysql+pymysql://user:password@localhost/mydatabase')
     
     with engine.connect() as conn:
         update_statement = "UPDATE Product SET price = :new_price WHERE symbol = :symbol;"
@@ -116,7 +116,7 @@ async def new_orderbookdb_asset(symbol: str,
     """
     from sqlalchemy import create_engine
     
-    engine = create_engine('postgresql://user:password@localhost/mydatabase')
+    engine = create_engine('mysql+pymysql://user:password@localhost/mydatabase')
     with engine.connect() as conn:
         update_statement = """INSERT INTO `orderbook`.`Product`
                             (`symbol`,
