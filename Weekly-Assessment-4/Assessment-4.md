@@ -150,7 +150,7 @@ We will only be updating the dev environment to test our new API. This activity 
 
     For application errors
     ```
-    {namespace="<COHORT>-<TEAM>-dev"} |= ``
+    {namespace="<COHORT>-<TEAM>-dev", container="currencyapi"} |= ``
     ```
 
 # Assesment
