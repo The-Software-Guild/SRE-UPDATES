@@ -47,6 +47,7 @@ async def available_currencies(from_currency: str) -> dict:
     """
     Coded by: <name>
     This endpoint returns a list of available fiat currenices.
+    @from_currency : str - you must specify a currency to see what currencies it can be compared against
     """
     response = requests.get(f"{API_BASE_URL}{from_currency.upper()}")
     if response.status_code == 200:
@@ -74,8 +75,10 @@ async def convert_crypto(from_crypto: str, to_currency: str) -> dict:
     """
     Coded by: <name>
     This endpoint allows you to get a quote in for crypto in any supported currency
+    @from_crypto - chose a crypto currency (eg. BTC, or ETH)
+    @to_currency - chose a currency to obtain the price in (eg. USD, or CAD)
     """
-    response = requests.get(f'https://api.coinbase.com/v2/prices/{from_crypto}-{to_currency}/spot')
+    response = requests.get(f'https://api.coinbase.com/v2/prices/{from_crypto.upper()}-{to_currency.upper()}/spot')
     if response.status_code == 200:
         return response.json()
 
@@ -89,6 +92,8 @@ async def update_orderbookdb_asset_price(symbol: str, new_price: int) -> dict:
     """
     Coded by: <name>
     This endpoint allows us to update the price of our apps assets
+    @symbol - pick a symbol to update the price of in the orderbook app
+    @new_price - Set the new price
     """
     from sqlalchemy import create_engine
     
@@ -100,7 +105,7 @@ async def update_orderbookdb_asset_price(symbol: str, new_price: int) -> dict:
             conn.execute(update_statement, new_price=new_price, symbol=symbol)
             return {"update_report":"sucess", "symbol":symbol, "new_price":new_price}
         except:
-            raise HTTPException(status_code=400, detail="An error occoured, make sure symbol exists")
+            raise HTTPException(status_code=400, detail="An error occoured, make sure symbol exists and price is numeric")
 
     
 # @CODE : ADD ENDPOINT FOR INSERTING A NEW Product (eg. ability to trade crypto)
@@ -132,5 +137,5 @@ async def new_orderbookdb_asset(symbol: str,
             conn.execute(update_statement, price=price, symbol=symbol, productType=productType, name=name)
             return {"insert_report":"sucess", "symbol":symbol, "price":price}
         except:
-            raise HTTPException(status_code=400, detail="Make sure asset exists")
+            raise HTTPException(status_code=400, detail="Make sure asset does not already exists and price is numeric")
     
