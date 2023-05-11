@@ -153,8 +153,12 @@ We will only be updating the dev environment to test our new API. This activity 
     {namespace="<COHORT>-<TEAM>-dev"} |= ``
     ```
 
-## BONUS
+# Assesment
 
-- Add an endpoint in the existing `orderbookapi` deployment that makes a request to your service. You should be able to use the container name as the service URI since both deployments have a service in the same namespace.
+Now that you have lanched the application you will need to add endpoints to the new API and connect the orderbook API. After doing so, prepare a 10-15 minute presentation explaining the change you  made.
 
-- Create a python error in a new endpoint for your currency api and find the logs for it. Do the same for YAML errors.
+- Go through the `app.py` file and implement each endpoint under the `# @CODE` comment.
+- Each team member should code at least one endpoint.
+- Make sure each endpoint in the file has a doc string and that it explains the endpoint, and names the team member who implemented it.
+
+To achieve a perfect mark you must implement all endpoints, account for errors, and present your powerpoint. Grading will be done at the discretion of the instructor.
