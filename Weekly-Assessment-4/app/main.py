@@ -64,7 +64,7 @@ async def available_crypto() -> dict:
     Coded by: <name>
     This endpoint allows you to see what crypto-currencies are available
     """
-    response = requests.get('https://api.coinbase.com/v2/currencies')
+    response = requests.get('https://api.coinbase.com/v2/crypto')
     if response.status_code == 200:
         return response.json()
     
