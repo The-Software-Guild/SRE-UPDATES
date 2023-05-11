@@ -89,8 +89,6 @@ async def update_orderbookdb_asset_price(symbol: str, new_price: int) -> dict:
     
     engine = create_engine('postgresql://user:password@localhost/mydatabase')
     
-    try: new_price = float(new_price) except: raise HTTPException(status_code=400, detail="new_price must be numeric")
-    
     with engine.connect() as conn:
         update_statement = "UPDATE Product SET price = :new_price WHERE symbol = :symbol;"
         try:
@@ -114,9 +112,6 @@ async def new_orderbookdb_asset(symbol: str,
     from sqlalchemy import create_engine
     
     engine = create_engine('postgresql://user:password@localhost/mydatabase')
-    
-    try: price = float(price) except: raise HTTPException(status_code=400, detail="new_price must be numeric")
-    
     with engine.connect() as conn:
         update_statement = """INSERT INTO `orderbook`.`Product`
                             (`symbol`,
