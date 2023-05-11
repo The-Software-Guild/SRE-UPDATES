@@ -37,6 +37,8 @@ We will only be updating the dev environment to test our new API. This activity 
     fastapi==0.95.1
     uvicorn==0.21.1
     requests==2.29.0
+    SQLAlchemy==2.0.4
+    pymysql==1.0.2
     ```
 
 5. Create a dockerfile in `Dockerfiles` named Dockerfile_CurrencyAPI 
