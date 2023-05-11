@@ -39,6 +39,7 @@ We will only be updating the dev environment to test our new API. This activity 
     requests==2.29.0
     SQLAlchemy==2.0.4
     pymysql==1.0.2
+    cryptography==39.0.2
     ```
 
 5. Create a dockerfile in `Dockerfiles` named Dockerfile_CurrencyAPI 
@@ -163,4 +164,4 @@ Now that you have lanched the application you will need to add endpoints to the 
 - Each team member should code at least one endpoint.
 - Make sure each endpoint in the file has a doc string and that it explains the endpoint, and names the team member who implemented it.
 
-To achieve a perfect mark you must implement all endpoints, account for errors, and present your powerpoint. Grading will be done at the discretion of the instructor.
+To achieve a perfect mark you must implement all endpoints, account for errors, and present your powerpoint. Grading will be done at the discretion of the instructor. Be sure to include the different systems your API connects too and how they were used by your API.
