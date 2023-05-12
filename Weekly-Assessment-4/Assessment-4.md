@@ -1,20 +1,20 @@
 # Introduction
 In this activity you will launch the API you created in your k8s namespace. You will be using all of the skills you learned in this course to modify our pipeline with the new API. If working in a group take turns with the steps. A sample app is provided if you need a working one to deploy.
 
-We will only be updating the dev environment to test our new API. This activity can be used to deploy any python FastAPI app, but uses the naming convention for the provided currency app. If you want to use a different naming convention, just be sure to replace the word "currency" with a more relevant name in each code sample.
+We will only be updating the dev environment to test our new API. The provided API is a currency converter API. After deploying it, your team will add functionality to that API by creating new endpoints. The new endpoints will allow you to get quotes from crypto-currencies, and insert them into the orderbook application. You will add more endpoints but first lets focus on the deployment!
 
 # Instructions
 
 ## Adding Source Code to GitHub
 
-1. Create a new `branch` for the [orderbook](https://github.com/The-Software-Guild/pss-orderbook-deploy) app.
+1. Create a new `branch` for the [orderbook](https://github.com/The-Software-Guild/pss-orderbook-deploy) app, or use your existing on that is part of the jenkins pipeline.
     ```
     git clone https://github.com/The-Software-Guild/pss-orderbook-deploy
     cd pss-orderbook-deploy
     git checkout -b <COHORT><TEAM>
     ```
 
-2. Create a new folder in `src` named after your API. 
+2. Create a new folder in `src` named after the API. 
     ```
     mkdir src/currencyAPI
     ```
@@ -47,7 +47,7 @@ We will only be updating the dev environment to test our new API. This activity 
     vi Dockerfiles/Dockerfile_currencyAPI
     ```
 
-    Paste the docker instructions below. Be sure to use the correct API name.
+    Paste the docker instructions below.
 
     ```dockerfile
     FROM python:3.10.0
@@ -74,13 +74,13 @@ We will only be updating the dev environment to test our new API. This activity 
     ```sh
     /kaniko/executor -f `pwd`/Dockerfiles/Dockerfile_currencyAPI -c `pwd` --insecure --skip-tls-verify --cache=false --destination=${ECR_REPO}:${JOB_NAME}currency-api-dev-${BUILD_NUMBER}
     ```
-    A common error is curly brackets, make sure to follow the convention of the file. Be sure to use an appropriate name in destination, it will be used later.
+    A common error is curly brackets, make sure to follow the convention of the file.
 
 2. Push your changes.
 
-3. Log into [jenkins](https://jenkins.computerlab.online/) and locate your pipeline settings. Update the branch to the new branch you created.
+3. Log into [jenkins](https://jenkins.computerlab.online/) and locate your pipeline settings. Update or confirm the pipelines branch matches the one you make your code changes to.
 
-4. Execute the pipeline and monitor for errors. Common errors are curly brackets in the Jenkinsfile or using the wrong nameing convention. When you see your newly created image in the [ecr-list](http://ecrlist-ps.computerlab.online/index.php) with the name you used for --destination above, your delievery pipeline has been updated.
+4. Execute the pipeline and monitor for errors. Common errors are curly brackets in the Jenkinsfile or using the wrong nameing convention. When you see your newly created image in the [ecr-list](http://ecrlist-ps.computerlab.online/index.php) with the name you used for destination above, your delievery pipeline has been updated.
 
 ## Deploying to Dev
 
@@ -97,7 +97,7 @@ We will only be updating the dev environment to test our new API. This activity 
     git checkout -b <COHORT><TEAM>-dev
     ```
 
-4. Create three files to deploy this application. You can give these files more relevant names if deploying a different API.
+4. Create three files to deploy this application.
     ```
     touch deployment-currencyapi.yaml service-currencyapi.yaml imgPolicy-currencyapi.yaml
     ```
