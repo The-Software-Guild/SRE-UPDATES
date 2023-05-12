@@ -138,7 +138,8 @@ async def update_orderbookdb_asset_price(symbol: str, new_price: float) -> dict:
 
     
 # @CODE : ADD ENDPOINT FOR INSERTING A CRYPTO CURRENCY INTO THE ORDERBOOK APP
-# HINT: Make use of the convert_crypto function from above!
+# HINT: Make use of the convert_crypto function from above! 
+#       You will need to use the await keyword to wait for the result (otherwise it will run async and not wait for the result)
 #@app.get("/add_crypto_to_orderbook")
 #async def add_crypto_to_orderbook(symbol: str) -> dict:
 #    """
