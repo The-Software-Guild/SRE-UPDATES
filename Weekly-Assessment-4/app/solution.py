@@ -179,7 +179,9 @@ async def add_crypto_to_orderbook(symbol: str) -> dict:
     metadata.create_all(engine)
     Session = sessionmaker(bind=engine)
     
-    price = convert_crypto(symbol, "USD")["data"]["amount"]
+    crypto_data = await convert_crypto(symbol, "USD")
+    
+    price = crypto_data["data"]["amount"]
 
     try:
         session = Session()
