@@ -189,7 +189,7 @@ async def add_crypto_to_orderbook(symbol: str) -> dict:
         session.execute(new_product)
         session.commit()
         session.flush()
-        return {"insert_report": "success", "symbol": symbol, "price": price, "productType": productType, "name": name}
+        return {"insert_report": "success", "symbol": symbol, "price": price, "productType": 'crypto', "name": symbol}
     except Exception as e:
         print(e)
         raise HTTPException(status_code=400, detail="An error occurred while inserting the product data")
