@@ -168,7 +168,7 @@ To achieve a perfect mark you must implement all endpoints, account for errors, 
 
 # Rubric
 
-You will be marked out of 100. The table below describes how.   
+You will be marked out of 100. The table below describes the three different grading criteria and how to gain maximum points in each one.
 
 
 
@@ -179,3 +179,4 @@ You will be marked out of 100. The table below describes how.
 | - The team was able to deploy the API           | - Each team membe rcoded at least one endpoint               | - Every team member participated and talked about their contribution to the API deployment and endpoints |
 | - The team was able to test and use the API           | - All endpoints are complete ( 6 points per endpoint )| - Presentation demonstrates an understanding of the code and pipeline          |
 
+|  | - The code is well documented with doc strings | |
