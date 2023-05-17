@@ -178,5 +178,4 @@ You will be marked out of 100. The table below describes the three different gra
 | 50 points  | 30 points                      | 20 points    |
 | - The team was able to deploy the API           | - Each team membe rcoded at least one endpoint               | - Every team member participated and talked about their contribution to the API deployment and endpoints |
 | - The team was able to test and use the API           | - All endpoints are complete ( 6 points per endpoint )| - Presentation demonstrates an understanding of the code and pipeline          |
-
 |    | - The code is well documented with doc strings |      |
