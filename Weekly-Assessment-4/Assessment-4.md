@@ -175,7 +175,6 @@ You will be marked out of 100. The table below describes how.
 
 | Deployment | Endpoints                      | Presentation |
 | 50 points  | 30 points                      | 20 points    |
-|            | (6 points/endpoint)            |              |
 | ---------- | ------------------------------ | ------------- |
 |            | - Each team member              |                |
 |     world       | coded at least one       |             hello          |
