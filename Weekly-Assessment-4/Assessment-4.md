@@ -164,7 +164,7 @@ Now that you have lanched the application you will need to add endpoints to the 
 - Each team member should code at least one endpoint.
 - Make sure each endpoint in the file has a doc string and that it explains the endpoint, and names the team member who implemented it.
 
-To achieve a perfect mark you must implement all endpoints, account for errors, and present your powerpoint. Grading will be done at the discretion of the instructor. Be sure to include the different systems your API connects too and how they were used by your API.
+To achieve a perfect mark you must implement all endpoints, account for errors, and present your powerpoint. Grading will be done at the discretion of the instructor by the rubric below. 
 
 # Rubric
 
