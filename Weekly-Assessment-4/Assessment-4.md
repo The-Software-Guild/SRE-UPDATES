@@ -140,7 +140,7 @@ We will only be updating the dev environment to test our new API. The provided A
     ```
 9. Create a PR and merge to main branch. 
 
-10. Test your app with the URI creted in the ingress file and the `doc` endpoint such as `https://<COHORT><TEAM>dev-currencyapi.computerlab.online/docs`
+10. Test your app with the URL creted in the ingress file and the `doc` endpoint such as `https://<COHORT><TEAM>dev-currencyapi.computerlab.online/docs`
 
 ## Troubleshooting
 - Use the [k8s dashboard](https://k8sdashboard.computerlab.online/), search for your namespace at the top and wait for the deployment to be available.
