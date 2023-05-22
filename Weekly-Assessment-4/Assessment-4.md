@@ -69,7 +69,7 @@ We will only be updating the dev environment to test our new API. The provided A
 
 ## Updating Pipeline
 
-1. Within your branch, update the `Jenkinsfile` by adding another stage named after your API. You can do this by copying one of the other stages and updating the stage name and kaniko command. Below is an example of the updated kaniko command with the new dockerfile and destination. 
+1. Within your branch of the pss-orderbook-deploy repo, update the `Jenkinsfile` by adding another stage named after your API. You can do this by copying one of the other stages and updating the stage name and kaniko command. Below is an example of the updated kaniko command with the new dockerfile and destination. 
 
     ```sh
     /kaniko/executor -f `pwd`/Dockerfiles/Dockerfile_currencyAPI -c `pwd` --insecure --skip-tls-verify --cache=false --destination=${ECR_REPO}:${JOB_NAME}currency-api-dev-${BUILD_NUMBER}
