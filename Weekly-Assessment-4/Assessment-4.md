@@ -90,7 +90,7 @@ We will only be updating the dev environment to test our new API. The provided A
     ```
 2. Change directory to your enviornment.
     ```
-    cd /flux/apps/eks-sre-course/<COHORT>-<TEAM>-dev
+    cd flux/apps/eks-sre-course/<COHORT>-<TEAM>-dev
     ```
 3. Use or create a branch for your team
     ```
