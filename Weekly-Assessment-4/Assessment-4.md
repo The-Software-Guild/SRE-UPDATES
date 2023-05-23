@@ -109,7 +109,7 @@ We will only be updating the dev environment to test our new API. The provided A
 
 6. Update the templates. Use `sed` to replace `<COHORT>`,`<TEAM>` and `<API>` with the correct values. For example 
     ```sh
-    sed -i 's/<API>/currency/g' deployment-currencyapi.yaml service-currencyapi.yaml imgPolicy-currencyapi.yaml
+    sed 's/<API>/currency/g' -i deployment-currencyapi.yaml service-currencyapi.yaml imgPolicy-currencyapi.yaml
 
     # sed on <COHORT>
 
@@ -134,7 +134,7 @@ We will only be updating the dev environment to test our new API. The provided A
 
 8. Push the changes
     ```
-    git add service-currencyapi.yaml deployment-dev-sample.yaml imgPolicy-currency.yaml ingress.yaml
+    git add service-currencyapi.yaml deployment-dev.yaml imgPolicy-currency.yaml ingress.yaml
     git commit -m"Adding a new service to dev"
     git push
     ```
