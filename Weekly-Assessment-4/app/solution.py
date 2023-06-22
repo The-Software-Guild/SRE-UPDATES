@@ -40,13 +40,13 @@ async def convert_amount(from_currency: str, to_currency: str, amount: float) ->
     }
   
 # @CODE : AN ENDPOINT THAT TAKES A STRING AND CONFIRMS IT HAS
-# AT LEAST ONE UPPERCASE, LOWERCASE, NUMBER AND IS 8 OR MORE CHARACTERS
+# AT LEAST ONE UPPERCASE, LOWERCASE, NUMBER AND INCLUDES 8 OR MORE CHARACTERS
 @app.get("/check_password_strength")
 async def check_password_strength(password: str) -> bool:
     """
     Coded By: <name>  
     This function checks whether a given password is strong enough, i.e., it contains at least one digit, one lowercase letter,
-    one uppercase letter, and is 8 characters long.
+    one uppercase letter, and includes at least 8 characters.
     """
     import re
     regex = r'^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$'
@@ -66,7 +66,7 @@ async def check_password_strength(password: str) -> bool:
 async def available_currencies(from_currency: str) -> dict:
     """
     Coded by: <name>  
-    This endpoint returns a list of available fiat currenices that can be paired with the @from_currency parameter.  
+    This endpoint returns a list of available fiat currencies that can be paired with the @from_currency parameter.  
     @from_currency : str - you must specify a currency to see what currencies it can be compared against  
     """
     response = requests.get(f"{API_BASE_URL}{from_currency.upper()}")
@@ -79,7 +79,7 @@ async def available_currencies(from_currency: str) -> dict:
 
 # @CODE : ADD ENDPOINT TO GET LIST OF CRYPTO CURRENCIES
 # You can use this API https://docs.cloud.coinbase.com/sign-in-with-coinbase/docs/api-currencies
-# just search for the endpoint that returns all the crypto currencies  
+# and search for the endpoint that returns all the crypto currencies  
 @app.get("/available_crypto")
 async def available_crypto() -> dict:
     """

@@ -41,13 +41,13 @@ async def convert_amount(from_currency: str, to_currency: str, amount: float) ->
   
 # @CODE : AN ENDPOINT THAT TAKES A STRING AND CONFIRMS IT HAS
 # AT LEAST ONE UPPERCASE, LOWERCASE, NUMBER AND IS 8 OR MORE CHARACTERS
-# Make sure the return type matches function signature, FastAPI enforces that it does!
+# Make sure the return type matches the function signature, FastAPI enforces that it does!
 #@app.get("/check_password_strength")
 #async def check_password_strength(password: str) -> bool:
 #    """
 #    Coded By: <name>  
-#    This function checks whether a given password is strong enough, i.e., it contains at least one digit, one lowercase letter,
-#    one uppercase letter, and is 8 characters long.
+#    This function checks whether a given password is strong enough, i.e., it contains at least one digit, 
+#    one lowercase letter, one uppercase letter, and is 8 characters long.
 #    """
 
 
@@ -58,14 +58,14 @@ async def convert_amount(from_currency: str, to_currency: str, amount: float) ->
 #async def available_currencies(from_currency: str) -> dict:
 #    """
 #    Coded by: <name>  
-#    This endpoint returns a list of available fiat currenices that can be paired with the @from_currency parameter.  
-#    @from_currency : str - you must specify a currency to see what currencies it can be compared against  
+#    This endpoint returns a list of available fiat currencies that can be paired with the @from_currency parameter.  
+#    @from_currency : str - you must specify a currency to see what currencies it can be compared against.
 #    """
 
 
 # @CODE : ADD ENDPOINT TO GET LIST OF CRYPTO CURRENCIES
 # You can use this API https://docs.cloud.coinbase.com/sign-in-with-coinbase/docs/api-currencies
-# just search for the endpoint that returns all the crypto currencies  
+# Search for the endpoint that returns all the crypto currencies.
 #@app.get("/available_crypto")
 #async def available_crypto() -> dict:
 #    """
@@ -86,15 +86,15 @@ async def convert_amount(from_currency: str, to_currency: str, amount: float) ->
 #    """
 
 
-# @CODE : ADD ENPOINT TO UPDATE PRICE OF ASSET IN ORDERBOOK DB
+# @CODE : ADD ENDPOINT TO UPDATE PRICE OF ASSET IN ORDERBOOK DB
 # The code below starts you off using SQLAlchemy ORM
 # Dependencies should already be installed from your requirements.txt file
-# Using the ORM instead of raw SQL is safer and less coupled, it is best practice!
+# Using the ORM instead of raw SQL is safer and less coupled: it is best practice!
 @app.get("/update_orderbookdb_asset_price")
 async def update_orderbookdb_asset_price(symbol: str, new_price: float) -> dict:
     """
     Coded by: <name>  
-    This endpoint allows us to update the price of our apps assets  
+    This endpoint allows us to update the price of the assets in the app  
     @symbol - pick a symbol to update the price of in the orderbook app  
     @new_price - The new price of the symbol  
     """
@@ -103,10 +103,10 @@ async def update_orderbookdb_asset_price(symbol: str, new_price: float) -> dict:
     from sqlalchemy import create_engine, Table, Column, String, DateTime, Numeric, update, MetaData
     from sqlalchemy.orm import sessionmaker
     
-    # create a engine for building sessions
+    # create an engine for building sessions
     engine = create_engine('mysql+pymysql://wiley:wiley123@orderbookdb/orderbook')
 
-    # create an ORM object that maps to our Product table
+    # create an ORM object that maps to the Product table
     metadata = MetaData()
     product_table = Table('Product', metadata,
         Column('symbol', String(16), primary_key=True),
