@@ -5,6 +5,8 @@ In this activity, you will launch the API you created in your k8s namespace. You
 
 A sample app is provided if you need a working app to deploy. If you wish to use the sample app, download and extract this zip file:
 
+* [placeholder for zip file]
+
 In this activity, you will only update the dev environment to test the new API. The provided API is a currency converter API. After deploying it, your team will add functionality to that API by creating new endpoints. The new endpoints will allow you to get quotes from crypto-currencies, and insert them into the orderbook application. You will add more endpoints later, but right now, let's focus on the deployment!
 
 ## Instructions
@@ -115,9 +117,9 @@ In this activity, you will only update the dev environment to test the new API. 
 6. Update the templates. Use `sed` to replace `<COHORT>`,`<TEAM>` and `<API>` with the correct values. For example 
     ```sh
     sed 's/<API>/currency/g' -i deployment-currencyapi.yaml service-currencyapi.yaml imgPolicy-currencyapi.yaml
-
+    
     # sed on <COHORT>
-
+    
     # sed on <TEAM>
     ```
 
@@ -171,6 +173,10 @@ After launching the application, you will add endpoints to the new API to set up
 
 To achieve a perfect mark you must implement all endpoints, account for errors, and present your work. The instructor will use the rubric below to grade your work.
 
+## Submit Your Work
+
+Prior to your presentation, submit the URL to the GitHub branch you used to code this assignment. 
+
 ## Rubric
 
 The assessment will be marked out of 100. The table below describes the three different grading criteria and how to gain maximum points in each one.
@@ -182,5 +188,5 @@ The assessment will be marked out of 100. The table below describes the three di
 | ---------- | ------------------------------- | ----------- |
 | 50 points  | 30 points                      | 20 points    |
 | - The team was able to deploy the API           | - Each team member completed at least one endpoint               | - Each team member participated in the presentation and talked about their contribution to the API deployment and endpoints |
-| - The team was able to test and use the API           | - All endpoints are complete ( 6 points per endpoint )| - The presentation demonstrated an understanding of the code and pipeline          |
+| - The team was able to test and use the API           | - All endpoints are complete ( up to 6 points per endpoint ) | - The presentation demonstrated an understanding of the code and pipeline          |
 |    | - The code is well documented with doc strings | - The presentation included a demo of the API with explanation     |
