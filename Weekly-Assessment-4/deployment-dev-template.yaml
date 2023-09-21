@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   labels:
     app: orderbook
-  name: <API>api
+  name: currencyapi
   namespace: <COHORT>-<TEAM>-dev
 spec:
   replicas: 1
@@ -11,15 +11,15 @@ spec:
     type: Recreate
   selector:
     matchLabels:
-      name: <API>api
+      name: currencyapi
   template:
     metadata:
       labels:
-        name: <API>api
+        name: currencyapi
     spec:
       containers:
       - name: <API>api
-        image: "108174090253.dkr.ecr.us-east-1.amazonaws.com/production-support-course:<COHORT><TEAM><API>-dev-1" # {"$imagepolicy": "flux-system:<COHORT><TEAM>dev<API>"}
+        image: "108174090253.dkr.ecr.us-east-1.amazonaws.com/production-support-course:<COHORT><TEAM>currency-api-dev-1" # {"$imagepolicy": "flux-system:<COHORT><TEAM>dev<API>"}
         imagePullPolicy: Always
         ports:
         - name: api
