@@ -7,7 +7,7 @@ spec:
   imageRepositoryRef:
     name: production-support-course
   filterTags:
-    pattern: '^<COHORT><TEAM><API>-dev-(?P<ts>.*)'
+    pattern: '^<COHORT><TEAM>currency-dev-(?P<ts>.*)'
     extract: '$ts'
   policy:
      numerical:
