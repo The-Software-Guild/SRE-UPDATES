@@ -18,7 +18,7 @@ spec:
         name: currencyapi
     spec:
       containers:
-      - name: <API>api
+      - name: currencyapi
         image: "108174090253.dkr.ecr.us-east-1.amazonaws.com/production-support-course:<COHORT><TEAM>currency-api-dev-1" # {"$imagepolicy": "flux-system:<COHORT><TEAM>devcurrency"}
         imagePullPolicy: Always
         ports:
